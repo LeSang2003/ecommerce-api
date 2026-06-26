@@ -1,0 +1,36 @@
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# Logs
+*.log
+logs/
+
+# IDE
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+.env.production
+.env.development
+
+# Application secrets (nếu sau này tạo)
+application-local.yml
+
+# Uploads
+uploads/
+
+# Generated files
+*.class

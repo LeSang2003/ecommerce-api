@@ -1,0 +1,48 @@
+server:
+  port: 8085
+
+spring:
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;databaseName=ecommerce;encrypt=false;
+    username: sa
+    password: 123
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  # =========================
+  # MAIL
+  # =========================
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+
+    properties:
+      mail:
+        smtp:
+          auth: true
+
+          starttls:
+            enable: true
+            required: true
+
+          ssl:
+            trust: smtp.gmail.com
+            protocols: TLSv1.2
+stripe:
+  secret:
+    key: ${STRIPE_SECRET_KEY}
+
+# =========================
+# VNPAY
+# =========================
+
+vnpay:
+  tmnCode: ${VNPAY_TMN_CODE}
+  hashSecret: ${VNPAY_HASH_SECRET}
+  payUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+  returnUrl: http://localhost:8085/api/payment/vnpay-return
