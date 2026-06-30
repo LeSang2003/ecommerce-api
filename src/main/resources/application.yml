@@ -1,12 +1,12 @@
 server:
-  port: 8085
+   port: ${PORT:8085}
 
 spring:
   datasource:
-    url: jdbc:sqlserver://localhost:1433;databaseName=ecommerce;encrypt=false;
-    username: sa
-    password: 123
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
