@@ -74,42 +74,40 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
   
   //Reveue last 7 days
   @Query(value = """
-SELECT 
-  CONVERT(date, o.create_at) as date,
-  SUM(o.total_price) as revenue
+SELECT
+    DATE(o.create_at) as revenue_date,
+    SUM(o.total_price) as revenue
 FROM orders o
-WHERE 
-  o.status = 'COMPLETED'
-  AND CONVERT(date, o.create_at) >= CONVERT(date, DATEADD(DAY, -6, GETDATE()))
-GROUP BY CONVERT(date, o.create_at)
-ORDER BY date
+WHERE o.status = 'COMPLETED'
+AND DATE(o.create_at) >= CURRENT_DATE - INTERVAL '6 days'
+GROUP BY DATE(o.create_at)
+ORDER BY revenue_date
 """, nativeQuery = true)
 List<Object[]> getRevenueLast7Days();
   
   //Revenue 30days
-  @Query(value = """
-SELECT 
-  CONVERT(date, o.create_at) as date,
-  SUM(o.total_price) as revenue
+ @Query(value = """
+SELECT
+    DATE(o.create_at) as revenue_date,
+    SUM(o.total_price) as revenue
 FROM orders o
-WHERE 
-  o.status = 'COMPLETED'
-  AND CONVERT(date, o.create_at) >= CONVERT(date, DATEADD(DAY, -29, GETDATE()))
-GROUP BY CONVERT(date, o.create_at)
-ORDER BY date
+WHERE o.status = 'COMPLETED'
+AND DATE(o.create_at) >= CURRENT_DATE - INTERVAL '29 days'
+GROUP BY DATE(o.create_at)
+ORDER BY revenue_date
 """, nativeQuery = true)
 List<Object[]> getRevenueLast30Days();
   //RevenueByMonth
   @Query(value = """
-  SELECT 
-    FORMAT(o.create_at, 'yyyy-MM') as month,
+SELECT
+    TO_CHAR(o.create_at, 'YYYY-MM') as month,
     SUM(o.total_price) as revenue
-  FROM orders o
-  WHERE o.status = 'COMPLETED'
-  GROUP BY FORMAT(o.create_at, 'yyyy-MM')
-  ORDER BY month
-  """, nativeQuery = true)
-  List<Object[]> getRevenueByMonth();
+FROM orders o
+WHERE o.status='COMPLETED'
+GROUP BY TO_CHAR(o.create_at, 'YYYY-MM')
+ORDER BY month
+""", nativeQuery = true)
+List<Object[]> getRevenueByMonth();
 
   @Query("""
   SELECT o FROM Order o
@@ -120,16 +118,17 @@ List<Object[]> getRevenueLast30Days();
   Optional<Order> findByIdWithItems(@Param("id") Long id);
 
 
-  @Query(value = """
-SELECT 
-  CONVERT(date, create_at) as date, 
-  SUM(total_price) as total
+ @Query(value = """
+SELECT
+    DATE(create_at) as revenue_date,
+    SUM(total_price) as total
 FROM orders
-WHERE status = 'COMPLETED'
-GROUP BY CONVERT(date, create_at)
-ORDER BY date
+WHERE status='COMPLETED'
+GROUP BY DATE(create_at)
+ORDER BY revenue_date
 """, nativeQuery = true)
 List<Object[]> revenueByDaysRaw();
+
 
 // USER PAGINATION ORDERS
 Page<Order> findByUser(User user, Pageable pageable);
