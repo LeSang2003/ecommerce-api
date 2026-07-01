@@ -52,6 +52,6 @@ public class UploadController {
 
     System.out.println("UPLOAD SUCCESS");
 
-    return "http://localhost:8085/uploads/" + filename;
+    return "http://${import.meta.env.VITE_API_HOST}/uploads/" + filename;
   }
 }

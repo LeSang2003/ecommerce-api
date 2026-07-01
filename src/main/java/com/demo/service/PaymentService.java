@@ -12,7 +12,7 @@ public class PaymentService {
     SessionCreateParams params =
             SessionCreateParams.builder()
                     .setMode(SessionCreateParams.Mode.PAYMENT)
-                    .setSuccessUrl("http://localhost:8085/api/payment/success?session_id={CHECKOUT_SESSION_ID}")
+                    .setSuccessUrl("http://${import.meta.env.VITE_API_HOST}/api/payment/success?session_id={CHECKOUT_SESSION_ID}")
                     .setCancelUrl("http://localhost:3000/cancel")
                     .putMetadata("orderId", String.valueOf(orderId))
                     .addLineItem(
