@@ -46,3 +46,11 @@ vnpay:
   hashSecret: ${VNPAY_HASH_SECRET}
   payUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
   returnUrl: https://endearing-empathy-production-db34.up.railway.app/api/payment/vnpay-return
+
+# =========================
+# Cloudinary
+# =========================
+cloudinary:
+  cloud-name: ${CLOUDINARY_CLOUD_NAME}
+  api-key: ${CLOUDINARY_API_KEY}
+  api-secret: ${CLOUDINARY_API_SECRET}

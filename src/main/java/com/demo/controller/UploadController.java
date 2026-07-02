@@ -1,57 +1,35 @@
 package com.demo.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.UUID;
-
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
 @CrossOrigin("*")
+@RequiredArgsConstructor
 public class UploadController {
+
+    private final Cloudinary cloudinary;
 
     @PostMapping("/upload")
     public String upload(@RequestParam("file") MultipartFile file)
         throws IOException {
 
-    System.out.println("=== UPLOAD API CALLED ===");
+        if (file == null || file.isEmpty()) {
+            throw new RuntimeException("File is empty");
+        }
 
-    if (file == null || file.isEmpty()) {
-        throw new RuntimeException("File is empty");
+        Map uploadResult = cloudinary.uploader().upload(
+            file.getBytes(),
+            ObjectUtils.emptyMap()
+        );
+
+        return (String) uploadResult.get("secure_url");
     }
-
-    // LOG tên file
-    System.out.println("File name: " + file.getOriginalFilename());
-
-    String uploadDir =
-            System.getProperty("user.dir") + "/uploads/";
-
-    // LOG đường dẫn lưu
-    System.out.println("Upload dir: " + uploadDir);
-
-    File dir = new File(uploadDir);
-
-    if (!dir.exists()) {
-        dir.mkdirs();
-    }
-
-    String filename =
-            UUID.randomUUID() + "_" +
-            file.getOriginalFilename();
-
-    System.out.println("New filename: " + filename);
-
-    File dest = new File(uploadDir + filename);
-
-    // LOG file đích
-    System.out.println("Destination: " + dest.getAbsolutePath());
-
-    file.transferTo(dest);
-
-    System.out.println("UPLOAD SUCCESS");
-
-    return "http://${import.meta.env.VITE_API_HOST}/uploads/" + filename;
-  }
 }
