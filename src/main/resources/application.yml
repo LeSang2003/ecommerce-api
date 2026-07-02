@@ -12,23 +12,19 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-  # =========================
-  # MAIL
-  # =========================
-  mail:
-    host: smtp.gmail.com
-    port: 465
-    username: ${MAIL_USERNAME}
-    password: ${MAIL_PASSWORD}
-    properties:
-      mail:
-        smtp:
-          auth: true
-          ssl:
-          enable: true
-        starttls:
-          enable: false
-          required: false
+
+app:
+  frontend-url: ${FRONTEND_URL}
+# =========================
+# SENDGRID (thay cho SMTP Gmail)
+# =========================
+sendgrid:
+  api:
+    key: ${SENDGRID_API_KEY}
+  from:
+    email: ${SENDGRID_FROM_EMAIL}
+    name: ${SENDGRID_FROM_NAME}
+
 stripe:
   secret:
     key: ${STRIPE_SECRET_KEY}
