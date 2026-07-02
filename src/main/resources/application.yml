@@ -17,22 +17,18 @@ spring:
   # =========================
   mail:
     host: smtp.gmail.com
-    port: 587
+    port: 465
     username: ${MAIL_USERNAME}
     password: ${MAIL_PASSWORD}
-
     properties:
       mail:
         smtp:
           auth: true
-
-          starttls:
-            enable: true
-            required: true
-
           ssl:
-            trust: smtp.gmail.com
-            protocols: TLSv1.2
+          enable: true
+        starttls:
+          enable: false
+          required: false
 stripe:
   secret:
     key: ${STRIPE_SECRET_KEY}
