@@ -45,4 +45,4 @@ vnpay:
   tmnCode: ${VNPAY_TMN_CODE}
   hashSecret: ${VNPAY_HASH_SECRET}
   payUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
-  returnUrl: http://${import.meta.env.VITE_API_HOST}/api/payment/vnpay-return
+  returnUrl: https://endearing-empathy-production-db34.up.railway.app/api/payment/vnpay-return
