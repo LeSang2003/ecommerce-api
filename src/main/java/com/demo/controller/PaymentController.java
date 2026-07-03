@@ -67,6 +67,8 @@ public class PaymentController {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
 
+        String safeFrontendUrl = frontendUrl == null ? "" : frontendUrl.trim();
+
         if ("00".equals(responseCode)) {
 
             order.setTransactionNo(transactionNo);
@@ -84,10 +86,10 @@ public class PaymentController {
             order.getTotalPrice(),
             order.getItems()
             );
-            response.sendRedirect(frontendUrl + "/payment-success");
+            response.sendRedirect(safeFrontendUrl + "/payment-success");
 
         } else {
-            response.sendRedirect(frontendUrl + "/payment-failed");
+            response.sendRedirect(safeFrontendUrl + "/payment-failed");
         }
     }
 
