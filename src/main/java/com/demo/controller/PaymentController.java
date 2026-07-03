@@ -1,5 +1,6 @@
 package com.demo.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +32,10 @@ public class PaymentController {
     private final VNPayService vnPayService;
     private final OrderRepository orderRepository;
     private final MailService mailService;
+
+    @Value("${app.frontend-url}")
+    private String frontendUrl;
+
     // STRIPE
     @PostMapping("/checkout")
     public String checkout(
@@ -79,10 +84,10 @@ public class PaymentController {
             order.getTotalPrice(),
             order.getItems()
             );
-            response.sendRedirect("http://localhost:5173/payment-success");
+            response.sendRedirect(frontendUrl + "/payment-success");
 
         } else {
-            response.sendRedirect("http://localhost:5173/payment-failed");
+            response.sendRedirect(frontendUrl + "/payment-failed");
         }
     }
 
