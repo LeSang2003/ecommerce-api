@@ -400,7 +400,7 @@ mvn clean install
 mvn spring-boot:run
 ```
 
-The server starts on `http://localhost:8085` by default. On first run, `DataInitializer` seeds the `admin/123456` account plus a starter category, color/size set, and sample product, so the API is immediately testable with Postman/curl or the paired frontend without any manual SQL.
+The server starts on `http://localhost:8085` by default. On first run, `DataInitializer` seeds the `test1/123456` account plus a starter category, color/size set, and sample product, so the API is immediately testable with Postman/curl or the paired frontend without any manual SQL.
 
 ---
 
